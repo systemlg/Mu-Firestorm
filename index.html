@@ -2,9 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Esta línea es la más importante para que se adapte a pantallas de celulares -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Web Responsive</title>
+    <title>Menu Hamburguesa Flotante</title>
     
     <style>
         /* --- ESTILOS GENERALES --- */
@@ -15,7 +14,7 @@
             font-family: Arial, sans-serif;
         }
 
-        /* --- ESTILOS DEL HEADER (Por defecto para PC) --- */
+        /* --- ESTILOS DEL HEADER (PC) --- */
         .header-responsive {
             background-color: #333;
             color: #fff;
@@ -35,6 +34,7 @@
             font-weight: bold;
         }
 
+        /* Menú de navegación en PC */
         .nav-menu ul {
             list-style: none;
             display: flex;
@@ -49,41 +49,79 @@
         }
 
         .nav-menu a:hover {
-            color: #00bcd4; /* Cambia a color celeste al pasar el mouse */
+            color: #00bcd4;
         }
 
-        /* --- ADAPTACIÓN PARA CELULARES (Pantallas menores a 768px) --- */
+        /* Botón de hamburguesa (Oculto en PC) */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* --- ADAPTACIÓN PARA CELULARES (Menos de 768px) --- */
         @media (max-width: 768px) {
-            .header-responsive {
-                flex-direction: column; /* Pone el logo arriba y el menú abajo */
-                gap: 15px;
-                text-align: center;
-                padding: 15px 2%;
+            /* Mostramos el botón de tres líneas */
+            .menu-toggle {
+                display: block;
+            }
+
+            /* Convertimos el menú en una capa que se sobrepone (flotante) */
+            .nav-menu {
+                position: absolute;
+                top: 100%; /* Aparece justo debajo del header */
+                left: 0;
+                width: 100%;
+                background-color: #333;
+                max-height: 0; /* Oculto por defecto */
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out; /* Animación suave al abrir */
+            }
+
+            /* Clase que agregará JavaScript para mostrar el menú */
+            .nav-menu.active {
+                max-height: 300px; /* Altura suficiente para mostrar los enlaces */
             }
 
             .nav-menu ul {
-                flex-direction: column; /* Alinea los enlaces hacia abajo en vertical */
-                gap: 12px;
+                flex-direction: column;
+                gap: 0;
                 width: 100%;
+            }
+
+            .nav-menu li {
+                border-top: 1px solid #444;
             }
 
             .nav-menu a {
                 display: block;
-                padding: 8px 0;
-                background-color: #444; /* Les da forma de "botones" táctiles */
-                border-radius: 5px;
+                padding: 15px;
+                text-align: center;
+                width: 100%;
+            }
+            
+            .nav-menu a:hover {
+                background-color: #444;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Cabecera Responsive -->
+    <!-- Cabecera -->
     <header class="header-responsive">
         <div class="logo">
             <a href="#">MiMarca</a>
         </div>
-        <nav class="nav-menu">
+        
+        <!-- Botón Hamburguesa (&#9776; representa el icono de las 3 líneas) -->
+        <button class="menu-toggle" id="mobile-menu" aria-label="Abrir menú">&#9776;</button>
+        
+        <!-- Enlaces de navegación -->
+        <nav class="nav-menu" id="nav-menu">
             <ul>
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#servicios">Servicios</a></li>
@@ -92,11 +130,32 @@
         </nav>
     </header>
 
-    <!-- Contenido de prueba para ver el diseño -->
-    <main style="padding: 50px 5%; text-align: center;">
-        <h1>¡Hola Mundo!</h1>
-        <p>Achica la ventana del navegador o míralo en tu celular para ver cómo se adapta la barra de navegación.</p>
+    <!-- Contenido de la página -->
+    <main style="padding: 50px 5%; text-align: center; line-height: 1.6;">
+        <h1>¡Prueba el menú responsive!</h1>
+        <p>Si estás en PC, haz la ventana más angosta. Verás cómo aparece el botón de tres líneas y el menú se despliega elegantemente sobre este texto sin empujarlo bruscamente hacia abajo.</p>
     </main>
+
+    <!-- CÓDIGO JAVASCRIPT -->
+    <script>
+        // Seleccionamos el botón y el menú
+        const menuToggle = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+
+        // Escuchamos el clic en el botón
+        menuToggle.addEventListener('click', () => {
+            // "toggle" agrega la clase 'active' si no la tiene, o la quita si ya la tiene
+            navMenu.classList.toggle('active');
+        });
+
+        // Opcional: Cierra el menú automáticamente cuando se hace clic en un enlace
+        const menuLinks = document.querySelectorAll('.nav-menu a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
 
 </body>
 </html>
