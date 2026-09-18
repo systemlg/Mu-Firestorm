@@ -207,6 +207,21 @@
 
             .arrow { padding: 10px 15px; font-size: 18px; }
         }
+
+
+/* Nuevo Contenedor General Externo */
+.main-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #080808; /* Asegura el fondo oscuro unificado */
+    padding: 40px 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+        
     </style>
 </head>
 <body>
@@ -258,6 +273,159 @@
         </div>
     </div>
 
+
+<!-- Contenedor General Externo -->
+<div class="main-wrapper">
+
+    <!-- Panel del Ranking -->
+    <div class="ranking-panel">
+        <!-- Encabezado Principal -->
+        <header class="ranking-header">
+            <span class="sub-logo">HALL DA FAMA</span>
+            <h1>Ranking</h1>
+            <p class="description">Quem mata, fica. Clique no personagem ou na guild para abrir o perfil.</p>
+            
+            <!-- Filtros / Tags -->
+            <div class="tags-container">
+                <span class="tag active">Sem reset</span>
+                <span class="tag">Drop 10%</span>
+                <span class="tag">EXP x5</span>
+                <span class="tag">Season 21</span>
+            </div>
+        </header>
+
+        <!-- Sección de la Competencia -->
+        <section class="race-section">
+            <div class="race-header">
+                <div>
+                    <span class="race-badge">CORRIDA DE NÍVEIS</span>
+                    <h2>Primeiro no trono</h2>
+                    <p class="race-desc">O primeiro personagem a bater cada level leva o prêmio. Um vencedor por marco.</p>
+                    <p class="race-alert">Valendo — todo level conta para o trono.</p>
+                </div>
+                <span class="status-online">ABERTO</span>
+            </div>
+
+            <!-- Contenedor de las 5 Tarjetas -->
+            <div class="cards-grid">
+                
+                <!-- Tarjeta 1: Conquistado 400 -->
+                <article class="card conquistado">
+                    <div class="card-top">
+                        <span class="status-text">CONQUISTADO</span>
+                        <span class="roman-number">I</span>
+                    </div>
+                    <div class="level-target">400</div>
+                    <div class="avatar-wrapper">
+                        <img src="https://pravatar.cc" alt="ANTIMAGE" class="avatar">
+                    </div>
+                    <div class="player-info">
+                        <span class="username">ANTIMAGE</span>
+                        <span class="details">Grow Lancer - 09/09</span>
+                    </div>
+                    <div class="reward-box">
+                        <div class="reward-icon">🏅</div>
+                        <span class="reward-title">30 dias</span>
+                        <span class="reward-subtitle">ALL INCLUSIVE</span>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 2: Conquistado 800 -->
+                <article class="card conquistado">
+                    <div class="card-top">
+                        <span class="status-text">CONQUISTADO</span>
+                        <span class="roman-number">II</span>
+                    </div>
+                    <div class="level-target">800</div>
+                    <div class="avatar-wrapper">
+                        <img src="https://pravatar.cc" alt="ANTIMAGE" class="avatar">
+                    </div>
+                    <div class="player-info">
+                        <span class="username">ANTIMAGE</span>
+                        <span class="details">Grow Lancer - 10/09</span>
+                    </div>
+                    <div class="reward-box">
+                        <div class="reward-icon">🔑</div>
+                        <span class="reward-title">100</span>
+                        <span class="reward-subtitle">SLAY KEYS</span>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 3: En la Frente (Líder actual) -->
+                <article class="card em-frente">
+                    <div class="card-top">
+                        <span class="status-text"></span>
+                        <span class="roman-number">III</span>
+                    </div>
+                    <div class="level-target">1200</div>
+                    <div class="avatar-wrapper">
+                        <img src="https://pravatar.cc" alt="BequiN1" class="avatar">
+                    </div>
+                    <div class="player-info">
+                        <span class="username">BequiN1</span>
+                        <span class="details text-red">Na frente - 1049</span>
+                    </div>
+                    <div class="reward-box">
+                        <div class="reward-icon">💵</div>
+                        <span class="reward-title text-green">US$ 100</span>
+                        <span class="reward-subtitle">EM DINHEIRO</span>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 4: Trono Vacio 1600 -->
+                <article class="card vacio">
+                    <div class="card-top">
+                        <span class="status-text"></span>
+                        <span class="roman-number">IV</span>
+                    </div>
+                    <div class="level-target">1600</div>
+                    <div class="throne-wrapper">
+                        <div class="throne-icon">🪑</div>
+                    </div>
+                    <div class="player-info">
+                        <span class="username muted">Trono vazio</span>
+                        <span class="details text-green">Aberto</span>
+                    </div>
+                    <div class="reward-box">
+                        <div class="reward-icon">💵</div>
+                        <span class="reward-title text-green">US$ 250</span>
+                        <span class="reward-subtitle">EM DINHEIRO</span>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 5: Trono Vacio 1800 -->
+                <article class="card vacio">
+                    <div class="card-top">
+                        <span class="status-text"></span>
+                        <span class="roman-number">V</span>
+                    </div>
+                    <div class="level-target">1800</div>
+                    <div class="throne-wrapper">
+                        <div class="throne-icon">🪑</div>
+                    </div>
+                    <div class="player-info">
+                        <span class="username muted">Trono vazio</span>
+                        <span class="details text-green">Aberto</span>
+                    </div>
+                    <div class="reward-box">
+                        <div class="reward-icon">💵</div>
+                        <span class="reward-title text-green">US$ 1.000</span>
+                        <span class="reward-subtitle">EM DINHEIRO</span>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </div>
+
+</div>
+
+
+
+
+
+
+    
 
 
     
