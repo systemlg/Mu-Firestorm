@@ -1,42 +1,266 @@
-
-<section class="container">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web con Carrusel Adaptado</title>
     
-    <!-- Tarjeta 1 (Estado: Conquistado) -->
-    <article class="card-level conquistado">
-        <!-- Indicador superior -->
-        <div class="card-header">
-            <span class="status-badge">CONQUISTADO</span>
-            <span class="roman-num">I</span>
+    <style>
+        /* --- ESTILOS GENERALES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body, html {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* --- ESTILOS DEL HEADER (Fijo arriba) --- */
+        .header-responsive {
+            background-color: rgba(51, 51, 51, 0.95);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2000;
+        }
+
+        .logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #00bcd4;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* --- ESTILOS DEL CARRUSEL --- */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            display: flex;
+            /* CAMBIO PC: Alinea el contenido a la izquierda y centrado verticalmente */
+            justify-content: flex-start; 
+            align-items: center;
+            text-align: left; /* Texto alineado a la izquierda */
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .carousel-slide img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(50%);
+            z-index: -1;
+        }
+
+        /* CAMBIO PC: Espaciado del contenedor para que no pegue al borde de la pantalla */
+        .carousel-content {
+            color: white;
+            padding: 20px;
+            margin-left: 10%; /* Empuja el bloque hacia la derecha un 10% */
+            max-width: 600px; /* Evita que el texto ocupe toda la pantalla a lo ancho */
+            z-index: 10;
+            padding-top: 18%;
+        }
+
+        .carousel-content h2 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+
+        .carousel-content p {
+            font-size: 20px;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+        }
+
+        .carousel-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background-color: #008ba3;
+        }
+
+        /* Flechas */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            font-size: 24px;
+            padding: 15px 20px;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 100;
+            transition: background 0.3s;
+        }
+
+        .arrow:hover { background-color: rgba(255, 255, 255, 0.5); }
+        .prev { left: 20px; }
+        .next { right: 20px; }
+
+        /* --- ADAPTACIÓN CELULARES (Menos de 768px) --- */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgba(51, 51, 51, 0.95);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out;
+            }
+
+            .nav-menu.active { max-height: 300px; }
+            .nav-menu ul { flex-direction: column; }
+            .nav-menu a { display: block; padding: 15px; text-align: center; }
+
+            /* CAMBIO CELULAR: El contenido vuelve al centro en pantallas chicas */
+            .carousel-slide {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .carousel-content {
+                margin-left: 0;
+                max-width: 90%;
+            }
+
+            .carousel-content h2 { 
+                font-size: 32px; 
+            }
+
+            /* CAMBIO CELULAR CRUCIAL: Oculta la descripción (párrafo) en smartphones */
+            .carousel-content p { 
+                display: none; 
+            }
+
+            .arrow { padding: 10px 15px; font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-responsive">
+        <div class="logo"><a href="#">MiMarca</a></div>
+        <button class="menu-toggle" id="mobile-menu">&#9776;</button>
+        <nav class="nav-menu" id="nav-menu">
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="carousel-container">
+        <button class="arrow prev" id="prevBtn">&#10094;</button>
+        <button class="arrow next" id="nextBtn">&#10095;</button>
+
+        <div class="carousel-slide active">
+            <img src="https://i.imgur.com/IhRrK53.jpeg" alt="Imagen 1">
+            <div class="carousel-content">
+                <h2>Diseño Creativo</h2>
+                <p>Anime, Accion, Terror, Suspenso.</p>
+                <p>Año 2027 - Mu Firestor.</p>
+                <a href="#" class="carousel-btn">Ver Más</a>
+            </div>
         </div>
 
-        <!-- Meta de nivel -->
-        <div class="level-number">400</div>
-        
-        <!-- CORREGIDO: URL del avatar funcional con tamaño e ID de imagen -->
-        <img src="https://pravatar.cc" alt="Avatar ANTIMAGE" class="user-avatar">
-        
-        <!-- Datos del Personaje -->
-        <div class="user-info">
-            <!-- CORREGIDO: Se agregaron las etiquetas de cierre faltantes -->
-            <div class="username">ANTIMAGE</div>
-            <div class="character-detail">Grow Lancer - 09/09</div>
+        <div class="carousel-slide">
+            <img src="https://i.imgur.com/7aHDej4.jpeg" alt="Imagen 2">
+            <div class="carousel-content">
+                <h2>Totalmente Responsive</h2>
+                <p>Tu sitio web se adaptará perfectamente a celulares y computadoras.</p>
+                <p>Año 2027 - Mu Firestor.</p>
+                <a href="#" class="carousel-btn">Portafolio</a>
+            </div>
         </div>
 
-        <!-- Contenedor del Premio / Artículo Inferior -->
-        <div class="reward-box">
-            <img src="https://picsum.photos" alt="Icono de Premio" class="reward-icon">
-            <div class="reward-text">30 días</div>
-            <div class="reward-subtext">ALL INCLUSIVE</div>
+        <div class="carousel-slide">
+            <img src="https://i.imgur.com/MaVReLw.jpeg" alt="Imagen 3">
+            <div class="carousel-content">
+                <h2>Impulsa tu Negocio</h2>
+                <p>Llega a miles de clientes potenciales en internet hoy mismo.</p>
+                <p>Año 2027 - Mu Firestor.</p>
+                <a href="#" class="carousel-btn">Contáctanos</a>
+            </div>
         </div>
-    </article>
-
-</section>
+    </div>
 
 
 
-
-
-
+    
     <script>
         const menuToggle = document.getElementById('mobile-menu');
         const navMenu = document.getElementById('nav-menu');
