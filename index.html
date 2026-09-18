@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Hamburguesa Flotante</title>
+    <title>Web con Carrusel Pantalla Completa</title>
     
     <style>
         /* --- ESTILOS GENERALES --- */
@@ -14,17 +14,24 @@
             font-family: Arial, sans-serif;
         }
 
-        /* --- ESTILOS DEL HEADER (PC) --- */
+        body, html {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* --- ESTILOS DEL HEADER (Fijo arriba) --- */
         .header-responsive {
-            background-color: #333;
+            background-color: rgba(51, 51, 51, 0.95); /* Un poco transparente */
             color: #fff;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 5%;
-            position: sticky;
+            position: fixed; /* Se mantiene fijo al hacer scroll */
             top: 0;
-            z-index: 1000;
+            left: 0;
+            width: 100%;
+            z-index: 2000; /* Por encima de todo */
         }
 
         .logo a {
@@ -34,7 +41,6 @@
             font-weight: bold;
         }
 
-        /* Menú de navegación en PC */
         .nav-menu ul {
             list-style: none;
             display: flex;
@@ -52,7 +58,6 @@
             color: #00bcd4;
         }
 
-        /* Botón de hamburguesa (Oculto en PC) */
         .menu-toggle {
             display: none;
             background: none;
@@ -62,65 +67,138 @@
             cursor: pointer;
         }
 
-        /* --- ADAPTACIÓN PARA CELULARES (Menos de 768px) --- */
-        @media (max-width: 768px) {
-            /* Mostramos el botón de tres líneas */
-            .menu-toggle {
-                display: block;
-            }
+        /* --- ESTILOS DEL CARRUSEL PANTALLA COMPLETA --- */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* Ocupa el 100% de la altura visible de la pantalla */
+            overflow: hidden;
+            background-color: #000;
+        }
 
-            /* Convertimos el menú en una capa que se sobrepone (flotante) */
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0; /* Ocultas por defecto */
+            transition: opacity 0.8s ease-in-out; /* Transición suave de desvanecido */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Clase para activar la imagen visible */
+        .carousel-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        /* Estilos de las imágenes dentro del carrusel */
+        .carousel-slide img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Hace que la imagen llene la pantalla sin deformarse */
+            filter: brightness(50%); /* Oscurece un poco la imagen para que el texto se lea bien */
+            z-index: -1;
+        }
+
+        /* Texto encima de las imágenes */
+        .carousel-content {
+            color: white;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .carousel-content h2 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+
+        .carousel-content p {
+            font-size: 20px;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+        }
+
+        .carousel-btn {
+            padding: 12px 30px;
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background-color: #008ba3;
+        }
+
+        /* Flechas de Navegación (Izquierda y Derecha) */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            font-size: 24px;
+            padding: 15px 20px;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 100;
+            transition: background 0.3s;
+        }
+
+        .arrow:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .prev { left: 20px; }
+        .next { right: 20px; }
+
+
+        /* --- ADAPTACIÓN CELULARES --- */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+
             .nav-menu {
                 position: absolute;
-                top: 100%; /* Aparece justo debajo del header */
+                top: 100%;
                 left: 0;
                 width: 100%;
-                background-color: #333;
-                max-height: 0; /* Oculto por defecto */
+                background-color: rgba(51, 51, 51, 0.95);
+                max-height: 0;
                 overflow: hidden;
-                transition: max-height 0.3s ease-in-out; /* Animación suave al abrir */
+                transition: max-height 0.3s ease-in-out;
             }
 
-            /* Clase que agregará JavaScript para mostrar el menú */
-            .nav-menu.active {
-                max-height: 300px; /* Altura suficiente para mostrar los enlaces */
-            }
+            .nav-menu.active { max-height: 300px; }
+            .nav-menu ul { flex-direction: column; }
+            .nav-menu a { display: block; padding: 15px; text-align: center; }
 
-            .nav-menu ul {
-                flex-direction: column;
-                gap: 0;
-                width: 100%;
-            }
-
-            .nav-menu li {
-                border-top: 1px solid #444;
-            }
-
-            .nav-menu a {
-                display: block;
-                padding: 15px;
-                text-align: center;
-                width: 100%;
-            }
-            
-            .nav-menu a:hover {
-                background-color: #444;
-            }
+            /* Ajustar textos en celular */
+            .carousel-content h2 { font-size: 32px; }
+            .carousel-content p { font-size: 16px; }
+            .arrow { padding: 10px 15px; font-size: 18px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Cabecera -->
+    <!-- Cabecera Fija -->
     <header class="header-responsive">
-        <div class="logo">
-            <a href="#">MiMarca</a>
-        </div>
-        
-        <!-- Botón Hamburguesa (&#9776; representa el icono de las 3 líneas) -->
-        <button class="menu-toggle" id="mobile-menu" aria-label="Abrir menú">&#9776;</button>
-        
-        <!-- Enlaces de navegación -->
+        <div class="logo"><a href="#">MiMarca</a></div>
+        <button class="menu-toggle" id="mobile-menu">&#9776;</button>
         <nav class="nav-menu" id="nav-menu">
             <ul>
                 <li><a href="#inicio">Inicio</a></li>
@@ -130,29 +208,91 @@
         </nav>
     </header>
 
-    <!-- Contenido de la página -->
-    <main style="padding: 50px 5%; text-align: center; line-height: 1.6;">
-        <h1>¡Prueba el menú responsive!</h1>
-        <p>Si estás en PC, haz la ventana más angosta. Verás cómo aparece el botón de tres líneas y el menú se despliega elegantemente sobre este texto sin empujarlo bruscamente hacia abajo.</p>
-    </main>
+    <!-- Carrusel de Pantalla Completa -->
+    <div class="carousel-container">
+        
+        <!-- Flechas -->
+        <button class="arrow prev" id="prevBtn">&#10094;</button>
+        <button class="arrow next" id="nextBtn">&#10095;</button>
 
-    <!-- CÓDIGO JAVASCRIPT -->
+        <!-- Slide 1 (Lleva la clase active por defecto) -->
+        <div class="carousel-slide active">
+            <img src="https://picsum.photos" alt="Imagen 1">
+            <div class="carousel-content">
+                <h2>Diseño Creativo</h2>
+                <p>Creamos experiencias digitales increíbles y modernas.</p>
+                <a href="#" class="carousel-btn">Ver Más</a>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-slide">
+            <img src="https://picsum.photos" alt="Imagen 2">
+            <div class="carousel-content">
+                <h2>Totalmente Responsive</h2>
+                <p>Tu sitio web se adaptará perfectamente a celulares y computadoras.</p>
+                <a href="#" class="carousel-btn">Portafolio</a>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-slide">
+            <img src="https://picsum.photos" alt="Imagen 3">
+            <div class="carousel-content">
+                <h2>Impulsa tu Negocio</h2>
+                <p>Llega a miles de clientes potenciales en internet hoy mismo.</p>
+                <a href="#" class="carousel-btn">Contáctanos</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT (Menú + Mecanismo del Carrusel) -->
     <script>
-        // Seleccionamos el botón y el menú
+        // --- CÓDIGO DEL MENÚ ---
         const menuToggle = document.getElementById('mobile-menu');
         const navMenu = document.getElementById('nav-menu');
 
-        // Escuchamos el clic en el botón
         menuToggle.addEventListener('click', () => {
-            // "toggle" agrega la clase 'active' si no la tiene, o la quita si ya la tiene
             navMenu.classList.toggle('active');
         });
 
-        // Opcional: Cierra el menú automáticamente cuando se hace clic en un enlace
-        const menuLinks = document.querySelectorAll('.nav-menu a');
-        menuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
+
+        // --- CÓDIGO DEL CARRUSEL ---
+        const slides = document.querySelectorAll('.carousel-slide');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+        const autoPlayTime = 5000; // Cambia de imagen solo cada 5 segundos
+
+        function showSlide(index) {
+            // Quitamos la clase 'active' de la diapositiva actual
+            slides[currentIndex].classList.remove('active');
+            
+            // Actualizamos el índice asegurándonos de que sea cíclico
+            currentIndex = (index + totalSlides) % totalSlides;
+            
+            // Añadimos la clase 'active' a la nueva diapositiva
+            slides[currentIndex].classList.add('active');
+        }
+
+        // Eventos para los botones (Flechas)
+        nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
+        prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
+
+        // Movimiento automático
+        let autoPlay = setInterval(() => {
+            showSlide(currentIndex + 1);
+        }, autoPlayTime);
+
+        // Detener el autoPlay si el usuario hace clic manualmente en una flecha
+        [nextBtn, prevBtn].forEach(btn => {
+            btn.addEventListener('click', () => {
+                clearInterval(autoPlay);
+                // Reiniciar el temporizador para que siga automático después
+                autoPlay = setInterval(() => showSlide(currentIndex + 1), autoPlayTime);
             });
         });
     </script>
