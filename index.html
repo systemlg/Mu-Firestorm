@@ -238,6 +238,31 @@
             color: #aaa;
             font-size: 14px;
         }
+                /* Contenedor Flex/Grid para las tarjetas de niveles (Artículos) */
+        .cards-container {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        /* Estilos para cada artículo (Trono / Hito de Nivel) */
+        .level-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: #222229;
+            border: 1px solid #33333d;
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            border-color: #00bcd4;
+        }
         
     </style>
 </head>
