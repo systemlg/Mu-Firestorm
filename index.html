@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web con Carrusel y Tarjetas</title>
+    <title>Web con Carrusel Activo y Tarjetas</title>
     
     <style>
         /* --- ESTILOS GENERALES --- */
@@ -16,7 +16,7 @@
 
         body, html {
             height: 100%;
-            background-color: #121214; /* Fondo oscuro como el de la imagen */
+            background-color: #121214;
             color: #fff;
         }
 
@@ -90,11 +90,12 @@
         .carousel-content p { font-size: 20px; margin-bottom: 25px; }
         .carousel-btn { display: inline-block; padding: 12px 30px; background-color: #e50914; color: white; border: none; border-radius: 5px; font-size: 16px; text-decoration: none; font-weight: bold; }
 
-        .arrow { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.1); color: white; border: none; font-size: 24px; padding: 15px 20px; cursor: pointer; border-radius: 50%; z-index: 100; }
+        .arrow { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.1); color: white; border: none; font-size: 24px; padding: 15px 20px; cursor: pointer; border-radius: 50%; z-index: 100; transition: background 0.3s; }
+        .arrow:hover { background-color: rgba(255, 255, 255, 0.4); }
         .prev { left: 20px; }
         .next { right: 20px; }
 
-        /* --- NUEVA SECCIÓN DE TARJETAS (Estilo Imagen) --- */
+        /* --- ESTILOS DE LA SECCIÓN DE TARJETAS --- */
         .section-header {
             padding: 60px 5% 20px 5%;
             max-width: 1200px;
@@ -119,7 +120,6 @@
             font-size: 16px;
         }
 
-        /* Contenedor principal flexbox */
         .container {
             display: flex;
             justify-content: center;
@@ -127,16 +127,15 @@
             padding: 20px 5% 80px 5%;
             max-width: 1300px;
             margin: 0 auto;
-            flex-wrap: wrap; /* Permite que bajen si no entran en pantalla */
+            flex-wrap: wrap;
         }
 
-        /* Estilo de cada tarjeta (article) */
         .card-level {
             background-color: #060607;
             border: 1px solid #202024;
             border-radius: 12px;
             flex: 1;
-            min-width: 220px; /* Ancho mínimo para que no se aplasten mucho */
+            min-width: 220px;
             max-width: 240px;
             padding: 25px 20px;
             text-align: center;
@@ -154,24 +153,9 @@
             border-color: #ff3333;
         }
 
-        /* Borde superior decorativo o estado destacado */
-        .card-level.conquistado {
-            border-top: 2px solid #00ff66;
-        }
-
-        .status-badge {
-            font-size: 11px;
-            font-weight: bold;
-            color: #00ff66;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .level-number {
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
+        .card-level.conquistado { border-top: 2px solid #00ff66; }
+        .status-badge { font-size: 11px; font-weight: bold; color: #00ff66; text-transform: uppercase; margin-bottom: 10px; }
+        .level-number { font-size: 36px; font-weight: bold; margin-bottom: 15px; }
 
         .user-avatar {
             width: 70px;
@@ -182,44 +166,14 @@
             margin-bottom: 10px;
         }
 
-        .card-level.conquistado .user-avatar {
-            border-color: #00ff66;
-        }
+        .card-level.conquistado .user-avatar { border-color: #00ff66; }
+        .username { font-size: 16px; font-weight: bold; margin-bottom: 4px; }
+        .user-detail { color: #a8a8b3; font-size: 13px; margin-bottom: 20px; }
 
-        .username {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
-
-        .user-detail {
-            color: #a8a8b3;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-
-        /* Sección de premios abajo de la tarjeta */
-        .reward-icon {
-            font-size: 30px;
-            margin-bottom: 10px;
-        }
-
-        .reward-title {
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        .reward-subtitle {
-            font-size: 12px;
-            color: #a8a8b3;
-            text-transform: uppercase;
-            margin-top: 4px;
-        }
-
-        .reward-money {
-            color: #00ff66;
-            font-weight: bold;
-        }
+        .reward-icon { font-size: 30px; margin-bottom: 10px; }
+        .reward-title { font-size: 15px; font-weight: bold; }
+        .reward-subtitle { font-size: 12px; color: #a8a8b3; text-transform: uppercase; margin-top: 4px; }
+        .reward-money { color: #00ff66; font-weight: bold; }
 
         /* --- ADAPTACIÓN RESPONSIVE (Celulares) --- */
         @media (max-width: 768px) {
@@ -244,15 +198,8 @@
             .carousel-content p { display: none; }
             .arrow { padding: 10px 15px; font-size: 18px; }
 
-            /* Ajustes de tarjetas en celular */
-            .container {
-                flex-direction: column; /* Pone las tarjetas una debajo de otra */
-                align-items: center;
-            }
-            .card-level {
-                width: 100%;
-                max-width: 320px; /* Se hacen ligeramente más anchas y cómodas en móvil */
-            }
+            .container { flex-direction: column; align-items: center; }
+            .card-level { width: 100%; max-width: 320px; }
         }
     </style>
 </head>
@@ -271,7 +218,7 @@
         </nav>
     </header>
 
-    <!-- Carrusel -->
+    <!-- Carrusel Funcional -->
     <div class="carousel-container" id="inicio">
         <button class="arrow prev" id="prevBtn">&#10094;</button>
         <button class="arrow next" id="nextBtn">&#10095;</button>
@@ -293,22 +240,44 @@
                 <a href="#niveles" class="carousel-btn">Participar</a>
             </div>
         </div>
+
+        <div class="carousel-slide">
+            <img src="https://picsum.photos" alt="Imagen 3">
+            <div class="carousel-content">
+                <h2>Premios en Efectivo</h2>
+                <p>Alcanza la meta y reclama tus recompensas directamente en tu cuenta.</p>
+                <a href="#niveles" class="carousel-btn">Ver Premios</a>
+            </div>
+        </div>
     </div>
 
-    <!-- Títulos de la nueva sección -->
+    <!-- Títulos de la sección de tarjetas -->
     <div class="section-header" id="niveles">
         <h3>Corrida de niveles</h3>
         <h2>Primero en el trono</h2>
         <p>El primer personaje a batir cada nivel lleva el premio. Un vencedor por marco.</p>
     </div>
 
-    <!-- SECCIÓN DE TARJETAS SOLICITADA -->
+    <!-- Sección de tarjetas -->
     <section class="container">
         
-        <!-- Tarjeta 1 (Conquistado) -->
+        <!-- Tarjeta 1 -->
         <article class="card-level conquistado">
             <div class="status-badge">Conquistado</div>
             <div class="level-number">400</div>
             <img src="https://pravatar.cc" alt="Avatar" class="user-avatar">
             <div>
                 <div class="username">ANTIMAGE</div>
+                <div class="user-detail">Grow Lancer · 09/09</div>
+            </div>
+            <div>
+                <div class="reward-icon">🏅</div>
+                <div class="reward-title">30 días</div>
+                <div class="reward-subtitle">All Inclusive</div>
+            </div>
+        </article>
+
+        <!-- Tarjeta 2 -->
+        <article class="card-level conquistado">
+            <div class="status-badge">Conquistado</div>
+            <div class="level-number">800</div>
