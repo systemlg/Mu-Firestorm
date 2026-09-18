@@ -281,6 +281,77 @@
             .menu-toggle { display: block; }
             .cards-container { flex-direction: column; }
         }
+
+/* Contenedor Flex/Grid para las tarjetas de niveles (Artículos) */
+        .cards-container {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        /* Estilos para cada artículo (Trono / Hito de Nivel) */
+        .level-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: #222229;
+            border: 1px solid #33333d;
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            border-color: #00bcd4;
+        }
+
+        /* Estado conquistado especial */
+        .level-card.conquistado {
+            border-color: #9e2a2b;
+        }
+
+        .status-badge {
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ffb703;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .level-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .character-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #00bcd4;
+            margin-top: 5px;
+        }
+
+        .character-class {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .reward-info {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #33333d;
+            font-size: 13px;
+            color: #ffb703;
+        }
+
+
+
+        
     </style>
 </head>
 <body>
@@ -334,8 +405,7 @@
     </div>
 
     <!-- NUEVA ESTRUCTURA SEMÁNTICA SOLICITADA -->
-    <!-- Contenedor Principal -->
-  <main class="main-container">
+<main class="main-container">
         
     <!-- Sección de Tabla/Ranking Corrida de Niveles -->
     <section class="ranking-section">
@@ -363,7 +433,9 @@
         
     </section> <!-- Cierre de ranking-section -->
     
-</main> <!-- Cierre de main-container -->
+</main>
+
+    
     <script>
         const menuToggle = document.getElementById('mobile-menu');
         const navMenu = document.getElementById('nav-menu');
