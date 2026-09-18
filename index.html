@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web con Carrusel Activo y Tarjetas</title>
+    <title>Web con Carrusel Funcional y Tarjetas</title>
     
     <style>
         /* --- ESTILOS GENERALES --- */
@@ -14,10 +14,14 @@
             font-family: Arial, sans-serif;
         }
 
-        body, html {
-            height: 100%;
+        html {
+            scroll-behavior: smooth; /* Hace que el menú navegue suavemente */
+        }
+
+        body {
             background-color: #121214;
             color: #fff;
+            overflow-x: hidden;
         }
 
         /* --- ESTILOS DEL HEADER --- */
@@ -66,6 +70,7 @@
             height: 100vh;
             overflow: hidden;
             background-color: #000;
+            z-index: 10;
         }
 
         .carousel-slide {
@@ -80,24 +85,46 @@
             justify-content: flex-start; 
             align-items: center;
             text-align: left;
+            z-index: 1;
         }
 
-        .carousel-slide.active { opacity: 1; z-index: 1; }
-        .carousel-slide img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(40%); z-index: -1; }
+        /* La diapositiva activa se muestra y sube de capa */
+        .carousel-slide.active { 
+            opacity: 1; 
+            z-index: 2; 
+        }
+        
+        .carousel-slide img { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(40%); z-index: -1; 
+        }
 
         .carousel-content { color: white; padding: 20px; margin-left: 10%; max-width: 600px; z-index: 10; }
         .carousel-content h2 { font-size: 48px; margin-bottom: 15px; }
         .carousel-content p { font-size: 20px; margin-bottom: 25px; }
         .carousel-btn { display: inline-block; padding: 12px 30px; background-color: #e50914; color: white; border: none; border-radius: 5px; font-size: 16px; text-decoration: none; font-weight: bold; }
 
-        .arrow { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.1); color: white; border: none; font-size: 24px; padding: 15px 20px; cursor: pointer; border-radius: 50%; z-index: 100; transition: background 0.3s; }
-        .arrow:hover { background-color: rgba(255, 255, 255, 0.4); }
+        /* Botones de control del Carrusel (Z-index alto para que no los tape nada) */
+        .arrow { 
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            background-color: rgba(255, 255, 255, 0.2); 
+            color: white; 
+            border: none; 
+            font-size: 24px; 
+            padding: 15px 20px; 
+            cursor: pointer; 
+            border-radius: 50%; 
+            z-index: 100; /* Asegura que estén por encima de las imágenes */
+            transition: background 0.3s; 
+        }
+        .arrow:hover { background-color: rgba(255, 255, 255, 0.5); }
         .prev { left: 20px; }
         .next { right: 20px; }
 
         /* --- ESTILOS DE LA SECCIÓN DE TARJETAS --- */
         .section-header {
-            padding: 60px 5% 20px 5%;
+            padding: 100px 5% 20px 5%; /* Más padding arriba para que el menú fijo no tape el texto */
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -213,16 +240,17 @@
             <ul>
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#niveles">Niveles</a></li>
-                <li><a href="#contacto">Contacto</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Carrusel Funcional -->
+    <!-- Carrusel de Imágenes -->
     <div class="carousel-container" id="inicio">
+        <!-- Flechas de Control -->
         <button class="arrow prev" id="prevBtn">&#10094;</button>
         <button class="arrow next" id="nextBtn">&#10095;</button>
 
+        <!-- Slide 1 -->
         <div class="carousel-slide active">
             <img src="https://picsum.photos" alt="Imagen 1">
             <div class="carousel-content">
@@ -232,6 +260,7 @@
             </div>
         </div>
 
+        <!-- Slide 2 -->
         <div class="carousel-slide">
             <img src="https://picsum.photos" alt="Imagen 2">
             <div class="carousel-content">
@@ -241,6 +270,7 @@
             </div>
         </div>
 
+        <!-- Slide 3 -->
         <div class="carousel-slide">
             <img src="https://picsum.photos" alt="Imagen 3">
             <div class="carousel-content">
@@ -263,21 +293,3 @@
         
         <!-- Tarjeta 1 -->
         <article class="card-level conquistado">
-            <div class="status-badge">Conquistado</div>
-            <div class="level-number">400</div>
-            <img src="https://pravatar.cc" alt="Avatar" class="user-avatar">
-            <div>
-                <div class="username">ANTIMAGE</div>
-                <div class="user-detail">Grow Lancer · 09/09</div>
-            </div>
-            <div>
-                <div class="reward-icon">🏅</div>
-                <div class="reward-title">30 días</div>
-                <div class="reward-subtitle">All Inclusive</div>
-            </div>
-        </article>
-
-        <!-- Tarjeta 2 -->
-        <article class="card-level conquistado">
-            <div class="status-badge">Conquistado</div>
-            <div class="level-number">800</div>
