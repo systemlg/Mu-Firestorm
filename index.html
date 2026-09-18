@@ -335,21 +335,71 @@
 
     <!-- NUEVA ESTRUCTURA SEMÁNTICA SOLICITADA -->
     <!-- Contenedor Principal -->
-    <main class="main-container">
+  <main class="main-container">
         
-        <!-- Sección de Tabla/Ranking Corrida de Niveles -->
-        <section class="ranking-section">
+    <!-- Sección de Tabla/Ranking Corrida de Niveles -->
+    <section class="ranking-section">
+        
+        <div class="ranking-header">
+            <h2>Primeiro no trono</h2>
+            <p>O primeiro personagem a bater cada level leva o prêmio. Um vencedor por marco.</p>
+        </div>
+
+        <!-- Contenedor interno para agrupar los artículos -->
+        <div class="cards-container">
+
+            <!-- Artículo 1 -->
+            <article class="level-card conquistado">
+                <span class="status-badge" style="color: #ef4444;">Conquistado</span>
+                <div class="level-number">400</div>
+                <div class="character-name">ANTIMAGE</div>
+                <div class="character-class">Grow Lancer - 09/09</div>
+                <div class="reward-info">30 dias ALL INCLUSIVE</div>
+            </article>
             
-            <div class="ranking-header">
-                <h2>Primeiro no trono</h2>
-                <p>O primeiro personagem a bater cada level leva o prêmio. Um vencedor por marco.</p>
-            </div>
+            <!-- Aquí puedes continuar pegando el Artículo 2, 3, etc. -->
 
-            <!-- Contenedor interno para agrupar los artículos -->
-            <div class="cards-container">
+        </div> <!-- Cierre de cards-container -->
+        
+    </section> <!-- Cierre de ranking-section -->
+    
+</main> <!-- Cierre de main-container -->
+    <script>
+        const menuToggle = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
 
-                <!-- Artículo 1 -->
-                <article class="level-card conquistado">
-                    <span class="status-badge" style="color: #ef4444;">Conquistado</span>
-                    <div class="level-number">400</div>
-                    <div class="character-name">ANTIMAGE</div>
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        const slides = document.querySelectorAll('.carousel-slide');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+        const autoPlayTime = 5000;
+
+        function showSlide(index) {
+            slides[currentIndex].classList.remove('active');
+            currentIndex = (index + totalSlides) % totalSlides;
+            slides[currentIndex].classList.add('active');
+        }
+
+        nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
+        prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
+
+        let autoPlay = setInterval(() => { showSlide(currentIndex + 1); }, autoPlayTime);
+
+        [nextBtn, prevBtn].forEach(btn => {
+            btn.addEventListener('click', () => {
+                clearInterval(autoPlay);
+                autoPlay = setInterval(() => showSlide(currentIndex + 1), autoPlayTime);
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
