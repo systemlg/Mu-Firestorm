@@ -16,13 +16,12 @@
 
         body, html {
             height: 100%;
-            background-color: #121214; /* Fondo oscuro estilo juego */
-            color: #fff;
+            overflow-x: hidden;
         }
 
         /* --- ESTILOS DEL HEADER (Fijo arriba) --- */
         .header-responsive {
-            background-color: rgba(20, 20, 23, 0.95);
+            background-color: rgba(51, 51, 51, 0.95);
             color: #fff;
             display: flex;
             justify-content: space-between;
@@ -33,7 +32,6 @@
             left: 0;
             width: 100%;
             z-index: 2000;
-            border-bottom: 1px solid #2a2a30;
         }
 
         .logo a {
@@ -73,9 +71,9 @@
         .carousel-container {
             position: relative;
             width: 100%;
-            height: 60vh; /* Ajustado para dar espacio al contenido inferior */
-            margin-top: 60px; /* Margen por el header fijo */
+            height: 100vh;
             overflow: hidden;
+            background-color: #000;
         }
 
         .carousel-slide {
@@ -85,280 +83,137 @@
             width: 100%;
             height: 100%;
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.8s ease-in-out;
             display: flex;
+            /* CAMBIO PC: Alinea el contenido a la izquierda y centrado verticalmente */
+            justify-content: flex-start; 
             align-items: center;
-            justify-content: center;
+            text-align: left; /* Texto alineado a la izquierda */
         }
 
         .carousel-slide.active {
             opacity: 1;
-            z-index: 10;
-        }
-
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
             z-index: 1;
         }
 
+        .carousel-slide img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(50%);
+            z-index: -1;
+        }
+
+        /* CAMBIO PC: Espaciado del contenedor para que no pegue al borde de la pantalla */
         .carousel-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 30px;
-            border-radius: 8px;
-            max-width: 600px;
-            margin: 0 20px;
+            color: white;
+            padding: 20px;
+            margin-left: 10%; /* Empuja el bloque hacia la derecha un 10% */
+            max-width: 600px; /* Evita que el texto ocupe toda la pantalla a lo ancho */
+            z-index: 10;
+            padding-top: 18%;
         }
 
         .carousel-content h2 {
-            font-size: 32px;
-            margin-bottom: 10px;
-            color: #00bcd4;
+            font-size: 48px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
         }
 
         .carousel-content p {
-            margin-bottom: 15px;
-            font-size: 16px;
+            font-size: 20px;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
         }
 
         .carousel-btn {
             display: inline-block;
+            padding: 12px 30px;
             background-color: #00bcd4;
-            color: #fff;
-            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
             text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
             transition: background 0.3s;
         }
 
         .carousel-btn:hover {
-            background-color: #008c9e;
+            background-color: #008ba3;
         }
 
+        /* Flechas */
         .arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
+            background-color: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
             font-size: 24px;
-            padding: 15px;
+            padding: 15px 20px;
             cursor: pointer;
-            z-index: 20;
             border-radius: 50%;
+            z-index: 100;
             transition: background 0.3s;
         }
 
-        .arrow:hover {
-            background: rgba(0, 188, 212, 0.8);
-        }
-
+        .arrow:hover { background-color: rgba(255, 255, 255, 0.5); }
         .prev { left: 20px; }
         .next { right: 20px; }
 
-        /* --- NUEVA SECCIÓN: CONTENEDOR RANKING CORRIDA DE NIVELES --- */
-        .main-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .ranking-section {
-            background-color: #1a1a1f;
-            border: 1px solid #2d2d35;
-            border-radius: 8px;
-            padding: 25px;
-        }
-
-        .ranking-header {
-            margin-bottom: 25px;
-            border-bottom: 1px solid #2d2d35;
-            padding-bottom: 15px;
-        }
-
-        .ranking-header h2 {
-            font-size: 24px;
-            color: #f3f3f3;
-            margin-bottom: 5px;
-        }
-
-        .ranking-header p {
-            color: #aaa;
-            font-size: 14px;
-        }
-
-        /* Contenedor Flex/Grid para las tarjetas de niveles (Artículos) */
-        .cards-container {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-
-        /* Estilos para cada artículo (Trono / Hito de Nivel) */
-        .level-card {
-            flex: 1;
-            min-width: 200px;
-            background-color: #222229;
-            border: 1px solid #33333d;
-            border-radius: 6px;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .level-card:hover {
-            transform: translateY(-5px);
-            border-color: #00bcd4;
-        }
-
-        /* Estado conquistado especial */
-        .level-card.conquistado {
-            border-color: #9e2a2b;
-        }
-
-        .status-badge {
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-            color: #ffb703;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .level-number {
-            font-size: 36px;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 15px;
-        }
-
-        .character-name {
-            font-size: 14px;
-            font-weight: bold;
-            color: #00bcd4;
-            margin-top: 5px;
-        }
-
-        .character-class {
-            font-size: 12px;
-            color: #888;
-        }
-
-        .reward-info {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #33333d;
-            font-size: 13px;
-            color: #ffb703;
-        }
-
-        /* Responsivo para móviles */
+        /* --- ADAPTACIÓN CELULARES (Menos de 768px) --- */
         @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+
             .nav-menu {
-                display: none;
-                flex-direction: column;
                 position: absolute;
-                top: 60px;
+                top: 100%;
                 left: 0;
                 width: 100%;
                 background-color: rgba(51, 51, 51, 0.95);
-                padding: 20px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out;
             }
 
-            .nav-menu.active { display: flex; }
-            .nav-menu ul { flex-direction: column; gap: 15px; }
-            .menu-toggle { display: block; }
-            .cards-container { flex-direction: column; }
+            .nav-menu.active { max-height: 300px; }
+            .nav-menu ul { flex-direction: column; }
+            .nav-menu a { display: block; padding: 15px; text-align: center; }
+
+            /* CAMBIO CELULAR: El contenido vuelve al centro en pantallas chicas */
+            .carousel-slide {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .carousel-content {
+                margin-left: 0;
+                max-width: 90%;
+            }
+
+            .carousel-content h2 { 
+                font-size: 32px; 
+            }
+
+            /* CAMBIO CELULAR CRUCIAL: Oculta la descripción (párrafo) en smartphones */
+            .carousel-content p { 
+                display: none; 
+            }
+
+            .arrow { padding: 10px 15px; font-size: 18px; }
         }
-
-/* Contenedor Flex/Grid para las tarjetas de niveles (Artículos) */
-        .cards-container {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-
-        /* Estilos para cada artículo (Trono / Hito de Nivel) */
-        .level-card {
-            flex: 1;
-            min-width: 200px;
-            background-color: #222229;
-            border: 1px solid #33333d;
-            border-radius: 6px;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .level-card:hover {
-            transform: translateY(-5px);
-            border-color: #00bcd4;
-        }
-
-        /* Estado conquistado especial */
-        .level-card.conquistado {
-            border-color: #9e2a2b;
-        }
-
-        .status-badge {
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-            color: #ffb703;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .level-number {
-            font-size: 36px;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 15px;
-        }
-
-        .character-name {
-            font-size: 14px;
-            font-weight: bold;
-            color: #00bcd4;
-            margin-top: 5px;
-        }
-
-        .character-class {
-            font-size: 12px;
-            color: #888;
-        }
-
-        .reward-info {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #33333d;
-            font-size: 13px;
-            color: #ffb703;
-        }
-
-
-
-        
     </style>
 </head>
 <body>
 
     <header class="header-responsive">
         <div class="logo"><a href="#">MiMarca</a></div>
-        <button class="menu-toggle" id="mobile-menu">☰</button>
+        <button class="menu-toggle" id="mobile-menu">&#9776;</button>
         <nav class="nav-menu" id="nav-menu">
             <ul>
                 <li><a href="#inicio">Inicio</a></li>
@@ -368,16 +223,15 @@
         </nav>
     </header>
 
-    <!-- Carrusel de Imágenes -->
     <div class="carousel-container">
-        <button class="arrow prev" id="prevBtn">❮</button>
-        <button class="arrow next" id="nextBtn">❯</button>
+        <button class="arrow prev" id="prevBtn">&#10094;</button>
+        <button class="arrow next" id="nextBtn">&#10095;</button>
 
         <div class="carousel-slide active">
             <img src="https://i.imgur.com/IhRrK53.jpeg" alt="Imagen 1">
             <div class="carousel-content">
                 <h2>Diseño Creativo</h2>
-                <p>Anime, Acción, Terror, Suspenso.</p>
+                <p>Anime, Accion, Terror, Suspenso.</p>
                 <p>Año 2027 - Mu Firestor.</p>
                 <a href="#" class="carousel-btn">Ver Más</a>
             </div>
@@ -404,38 +258,6 @@
         </div>
     </div>
 
-    <!-- NUEVA ESTRUCTURA SEMÁNTICA SOLICITADA -->
-<main class="main-container">
-        
-    <!-- Sección de Tabla/Ranking Corrida de Niveles -->
-    <section class="ranking-section">
-        
-        <div class="ranking-header">
-            <h2>Primeiro no trono</h2>
-            <p>O primeiro personagem a bater cada level leva o prêmio. Um vencedor por marco.</p>
-        </div>
-
-        <!-- Contenedor interno para agrupar los artículos -->
-        <div class="cards-container">
-
-            <!-- Artículo 1 -->
-            <article class="level-card conquistado">
-                <span class="status-badge" style="color: #ef4444;">Conquistado</span>
-                <div class="level-number">400</div>
-                <div class="character-name">ANTIMAGE</div>
-                <div class="character-class">Grow Lancer - 09/09</div>
-                <div class="reward-info">30 dias ALL INCLUSIVE</div>
-            </article>
-            
-            <!-- Aquí puedes continuar pegando el Artículo 2, 3, etc. -->
-
-        </div> <!-- Cierre de cards-container -->
-        
-    </section> <!-- Cierre de ranking-section -->
-    
-</main>
-
-    
     <script>
         const menuToggle = document.getElementById('mobile-menu');
         const navMenu = document.getElementById('nav-menu');
@@ -473,5 +295,3 @@
 
 </body>
 </html>
-
-
