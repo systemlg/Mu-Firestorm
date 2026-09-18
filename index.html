@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web con Carrusel Adaptado</title>
+    <title>Web con Carrusel Corregido y Tarjetas</title>
     
     <style>
         /* --- ESTILOS GENERALES --- */
@@ -14,14 +14,19 @@
             font-family: Arial, sans-serif;
         }
 
-        body, html {
-            height: 100%;
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #121214;
+            color: #fff;
             overflow-x: hidden;
         }
 
-        /* --- ESTILOS DEL HEADER (Fijo arriba) --- */
+        /* --- ESTILOS DEL HEADER --- */
         .header-responsive {
-            background-color: rgba(51, 51, 51, 0.95);
+            background-color: rgba(20, 20, 22, 0.95);
             color: #fff;
             display: flex;
             justify-content: space-between;
@@ -32,6 +37,7 @@
             left: 0;
             width: 100%;
             z-index: 2000;
+            border-bottom: 1px solid #29292e;
         }
 
         .logo a {
@@ -54,18 +60,8 @@
             transition: color 0.3s;
         }
 
-        .nav-menu a:hover {
-            color: #00bcd4;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-        }
+        .nav-menu a:hover { color: #00bcd4; }
+        .menu-toggle { display: none; background: none; border: none; color: white; font-size: 28px; cursor: pointer; }
 
         /* --- ESTILOS DEL CARRUSEL --- */
         .carousel-container {
@@ -74,6 +70,7 @@
             height: 100vh;
             overflow: hidden;
             background-color: #000;
+            z-index: 10;
         }
 
         .carousel-slide {
@@ -85,213 +82,209 @@
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
             display: flex;
-            /* CAMBIO PC: Alinea el contenido a la izquierda y centrado verticalmente */
             justify-content: flex-start; 
             align-items: center;
-            text-align: left; /* Texto alineado a la izquierda */
-        }
-
-        .carousel-slide.active {
-            opacity: 1;
+            text-align: left;
             z-index: 1;
         }
 
-        .carousel-slide img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(50%);
-            z-index: -1;
+        /* El slide activo sube a la superficie */
+        .carousel-slide.active { 
+            opacity: 1; 
+            z-index: 2; 
+        }
+        
+        .carousel-slide img { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(40%); z-index: -1; 
         }
 
-        /* CAMBIO PC: Espaciado del contenedor para que no pegue al borde de la pantalla */
-        .carousel-content {
-            color: white;
-            padding: 20px;
-            margin-left: 10%; /* Empuja el bloque hacia la derecha un 10% */
-            max-width: 600px; /* Evita que el texto ocupe toda la pantalla a lo ancho */
-            z-index: 10;
-            padding-top: 18%;
-        }
+        .carousel-content { color: white; padding: 20px; margin-left: 10%; max-width: 600px; z-index: 10; }
+        .carousel-content h2 { font-size: 48px; margin-bottom: 15px; }
+        .carousel-content p { font-size: 20px; margin-bottom: 25px; }
+        .carousel-btn { display: inline-block; padding: 12px 30px; background-color: #e50914; color: white; border: none; border-radius: 5px; font-size: 16px; text-decoration: none; font-weight: bold; }
 
-        .carousel-content h2 {
-            font-size: 48px;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        /* Botones de control del Carrusel con Máxima Prioridad */
+        .arrow { 
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            background-color: rgba(255, 255, 255, 0.2); 
+            color: white; 
+            border: none; 
+            font-size: 24px; 
+            padding: 15px 20px; 
+            cursor: pointer; 
+            border-radius: 50%; 
+            z-index: 100; /* Siempre encima de las imágenes */
+            transition: background 0.3s; 
         }
-
-        .carousel-content p {
-            font-size: 20px;
-            margin-bottom: 25px;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
-        }
-
-        .carousel-btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: #00bcd4;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-
-        .carousel-btn:hover {
-            background-color: #008ba3;
-        }
-
-        /* Flechas */
-        .arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            font-size: 24px;
-            padding: 15px 20px;
-            cursor: pointer;
-            border-radius: 50%;
-            z-index: 100;
-            transition: background 0.3s;
-        }
-
         .arrow:hover { background-color: rgba(255, 255, 255, 0.5); }
         .prev { left: 20px; }
         .next { right: 20px; }
 
-        /* --- ADAPTACIÓN CELULARES (Menos de 768px) --- */
+        /* --- ESTILOS DE LA SECCIÓN DE TARJETAS --- */
+        .section-header {
+            padding: 100px 5% 20px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header h3 {
+            color: #ff3333;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .section-header h2 { font-size: 32px; margin-bottom: 10px; }
+        .section-header p { color: #a8a8b3; font-size: 16px; }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px 5% 80px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .card-level {
+            background-color: #060607;
+            border: 1px solid #202024;
+            border-radius: 12px;
+            flex: 1;
+            min-width: 220px;
+            max-width: 240px;
+            padding: 25px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 380px;
+            position: relative;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card-level:hover {
+            transform: translateY(-5px);
+            border-color: #ff3333;
+        }
+
+        .card-level.conquistado { border-top: 2px solid #00ff66; }
+        .status-badge { font-size: 11px; font-weight: bold; color: #00ff66; text-transform: uppercase; margin-bottom: 10px; }
+        .level-number { font-size: 36px; font-weight: bold; margin-bottom: 15px; }
+
+        .user-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid #ff3333;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .card-level.conquistado .user-avatar { border-color: #00ff66; }
+        .username { font-size: 16px; font-weight: bold; margin-bottom: 4px; }
+        .user-detail { color: #a8a8b3; font-size: 13px; margin-bottom: 20px; }
+
+        .reward-icon { font-size: 30px; margin-bottom: 10px; }
+        .reward-title { font-size: 15px; font-weight: bold; }
+        .reward-subtitle { font-size: 12px; color: #a8a8b3; text-transform: uppercase; margin-top: 4px; }
+        .reward-money { color: #00ff66; font-weight: bold; }
+
+        /* --- ADAPTACIÓN RESPONSIVE (Celulares) --- */
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
-
             .nav-menu {
                 position: absolute;
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background-color: rgba(51, 51, 51, 0.95);
+                background-color: rgba(20, 20, 22, 0.98);
                 max-height: 0;
                 overflow: hidden;
                 transition: max-height 0.3s ease-in-out;
             }
-
             .nav-menu.active { max-height: 300px; }
             .nav-menu ul { flex-direction: column; }
             .nav-menu a { display: block; padding: 15px; text-align: center; }
 
-            /* CAMBIO CELULAR: El contenido vuelve al centro en pantallas chicas */
-            .carousel-slide {
-                justify-content: center;
-                text-align: center;
-            }
-
-            .carousel-content {
-                margin-left: 0;
-                max-width: 90%;
-            }
-
-            .carousel-content h2 { 
-                font-size: 32px; 
-            }
-
-            /* CAMBIO CELULAR CRUCIAL: Oculta la descripción (párrafo) en smartphones */
-            .carousel-content p { 
-                display: none; 
-            }
-
+            .carousel-slide { justify-content: center; text-align: center; }
+            .carousel-content { margin-left: 0; max-width: 90%; }
+            .carousel-content h2 { font-size: 32px; }
+            .carousel-content p { display: none; }
             .arrow { padding: 10px 15px; font-size: 18px; }
+
+            .container { flex-direction: column; align-items: center; }
+            .card-level { width: 100%; max-width: 320px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Cabecera -->
     <header class="header-responsive">
-        <div class="logo"><a href="#">MiMarca</a></div>
+        <div class="logo"><a href="#">NivelPro</a></div>
         <button class="menu-toggle" id="mobile-menu">&#9776;</button>
         <nav class="nav-menu" id="nav-menu">
             <ul>
                 <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#niveles">Niveles</a></li>
             </ul>
         </nav>
     </header>
 
-    <div class="carousel-container">
+    <!-- Carrusel Contenedor General -->
+    <div class="carousel-container" id="inicio">
+        <!-- Las flechas se colocan aquí afuera para que JavaScript no pierda su rastro al cambiar las imágenes -->
         <button class="arrow prev" id="prevBtn">&#10094;</button>
         <button class="arrow next" id="nextBtn">&#10095;</button>
 
+        <!-- Slide 1 -->
         <div class="carousel-slide active">
-            <img src="https://i.imgur.com/IhRrK53.jpeg" alt="Imagen 1">
+            <img src="https://picsum.photos" alt="Imagen 1">
             <div class="carousel-content">
-                <h2>Diseño Creativo</h2>
-                <p>Anime, Accion, Terror, Suspenso.</p>
-                <p>Año 2027 - Mu Firestor.</p>
-                <a href="#" class="carousel-btn">Ver Más</a>
+                <h2>Torneo de Niveles</h2>
+                <p>Supera los retos antes que nadie y reclama fabulosos premios en efectivo.</p>
+                <a href="#niveles" class="carousel-btn">Ver Progreso</a>
             </div>
         </div>
 
+        <!-- Slide 2 -->
         <div class="carousel-slide">
-            <img src="https://i.imgur.com/7aHDej4.jpeg" alt="Imagen 2">
+            <img src="https://picsum.photos" alt="Imagen 2">
             <div class="carousel-content">
-                <h2>Totalmente Responsive</h2>
-                <p>Tu sitio web se adaptará perfectamente a celulares y computadoras.</p>
-                <p>Año 2027 - Mu Firestor.</p>
-                <a href="#" class="carousel-btn">Portafolio</a>
+                <h2>Compite Globalmente</h2>
+                <p>Mira los jugadores destacados que ya conquistaron los primeros tronos.</p>
+                <a href="#niveles" class="carousel-btn">Participar</a>
             </div>
         </div>
 
+        <!-- Slide 3 -->
         <div class="carousel-slide">
-            <img src="https://i.imgur.com/MaVReLw.jpeg" alt="Imagen 3">
+            <img src="https://picsum.photos" alt="Imagen 3">
             <div class="carousel-content">
-                <h2>Impulsa tu Negocio</h2>
-                <p>Llega a miles de clientes potenciales en internet hoy mismo.</p>
-                <p>Año 2027 - Mu Firestor.</p>
-                <a href="#" class="carousel-btn">Contáctanos</a>
+                <h2>Premios en Efectivo</h2>
+                <p>Alcanza la meta y reclama tus recompensas directamente en tu cuenta.</p>
+                <a href="#niveles" class="carousel-btn">Ver Premios</a>
             </div>
         </div>
     </div>
 
-    <script>
-        const menuToggle = document.getElementById('mobile-menu');
-        const navMenu = document.getElementById('nav-menu');
+    <!-- Encabezado de Tarjetas -->
+    <div class="section-header" id="niveles">
+        <h3>Corrida de niveles</h3>
+        <h2>Primero en el trono</h2>
+        <p>El primer personaje a batir cada nivel lleva el premio. Un vencedor por marco.</p>
+    </div>
 
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-
-        const slides = document.querySelectorAll('.carousel-slide');
-        const nextBtn = document.getElementById('nextBtn');
-        const prevBtn = document.getElementById('prevBtn');
+    <!-- Sección de Tarjetas -->
+    <section class="container">
         
-        let currentIndex = 0;
-        const totalSlides = slides.length;
-        const autoPlayTime = 5000;
-
-        function showSlide(index) {
-            slides[currentIndex].classList.remove('active');
-            currentIndex = (index + totalSlides) % totalSlides;
-            slides[currentIndex].classList.add('active');
-        }
-
-        nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
-        prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
-
-        let autoPlay = setInterval(() => { showSlide(currentIndex + 1); }, autoPlayTime);
-
-        [nextBtn, prevBtn].forEach(btn => {
-            btn.addEventListener('click', () => {
-                clearInterval(autoPlay);
-                autoPlay = setInterval(() => showSlide(currentIndex + 1), autoPlayTime);
-            });
-        });
-    </script>
-
-</body>
-</html>
+        <!-- Tarjeta 1 -->
+        <article class="card-level conquistado">
+            <div class="status-badge">Conquistado</div>
+            <div class="level-number">400</div>
