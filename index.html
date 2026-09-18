@@ -1,36 +1,69 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nombre de tu Página o Marca</title>
-</head>
-<body>
+    <style>
+        /* --- ESTILOS GENERALES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-    <!-- Cabecera -->
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
+        /* --- ESTILOS DEL HEADER (Por defecto para PC) --- */
+        .header-responsive {
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-    <!-- Sección Principal -->
-    <main>
-        <section id="inicio">
-            <h1>Bienvenido a Mi Sitio Web</h1>
-            <p>Aquí pones una frase atractiva sobre lo que haces o vendes.</p>
-            <button>Saber más</button>
-        </section>
-    </main>
+        .logo a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-    <!-- Pie de página -->
-    <footer>
-        <p>&copy; 2026 Mi Nombre. Todos los derechos reservados.</p>
-    </footer>
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
 
-</body>
-</html>
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #00bcd4; /* Cambia a color celeste al pasar el mouse */
+        }
+
+        /* --- ADAPTACIÓN PARA CELULARES (Pantallas menores a 768px) --- */
+        @media (max-width: 768px) {
+            .header-responsive {
+                flex-direction: column; /* Pone el logo arriba y el menú abajo */
+                gap: 15px;
+                text-align: center;
+                padding: 15px 2%;
+            }
+
+            .nav-menu ul {
+                flex-direction: column; /* Alinea los enlaces hacia abajo en vertical */
+                gap: 12px;
+                width: 100%;
+            }
+
+            .nav-menu a {
+                display: block;
+                padding: 8px 0;
+                background-color: #444; /* Les da forma de "botones" táctiles */
+                border-radius: 5px;
+            }
+        }
+    </style>
