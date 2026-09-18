@@ -287,13 +287,79 @@
         <p>El primer personaje a batir cada nivel lleva el premio. Un vencedor por marco.</p>
     </div>
 
-    <!-- Sección de tarjetas (¡CORREGIDO: Ahora se cierra perfectamente!) -->
-    <section class="container">
+    
+<section class="container">
+    
+    <!-- Tarjeta 1 (Estado: Conquistado) -->
+    <article class="card-level conquistado">
+        <!-- Indicador superior -->
+        <div class="card-header">
+            <span class="status-badge">CONQUISTADO</span>
+            <span class="roman-num">I</span>
+        </div>
+
+        <!-- Meta de nivel -->
+        <div class="level-number">400</div>
         
-        <!-- Tarjeta 1 -->
-        <article class="card-level conquistado">
-            <div class="status-badge">Conquistado</div>
-            <div class="level-number">400</div>
-            <img src="https://pravatar.cc" alt="Avatar" class="user-avatar">
-            <div>
-                <div class="username">ANTIMAGE</div>
+        <!-- CORREGIDO: URL del avatar funcional con tamaño e ID de imagen -->
+        <img src="https://pravatar.cc" alt="Avatar ANTIMAGE" class="user-avatar">
+        
+        <!-- Datos del Personaje -->
+        <div class="user-info">
+            <!-- CORREGIDO: Se agregaron las etiquetas de cierre faltantes -->
+            <div class="username">ANTIMAGE</div>
+            <div class="character-detail">Grow Lancer - 09/09</div>
+        </div>
+
+        <!-- Contenedor del Premio / Artículo Inferior -->
+        <div class="reward-box">
+            <img src="https://picsum.photos" alt="Icono de Premio" class="reward-icon">
+            <div class="reward-text">30 días</div>
+            <div class="reward-subtext">ALL INCLUSIVE</div>
+        </div>
+    </article>
+
+</section>
+
+
+
+
+
+
+    <script>
+        const menuToggle = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        const slides = document.querySelectorAll('.carousel-slide');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+        const autoPlayTime = 5000;
+
+        function showSlide(index) {
+            slides[currentIndex].classList.remove('active');
+            currentIndex = (index + totalSlides) % totalSlides;
+            slides[currentIndex].classList.add('active');
+        }
+
+        nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
+        prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
+
+        let autoPlay = setInterval(() => { showSlide(currentIndex + 1); }, autoPlayTime);
+
+        [nextBtn, prevBtn].forEach(btn => {
+            btn.addEventListener('click', () => {
+                clearInterval(autoPlay);
+                autoPlay = setInterval(() => showSlide(currentIndex + 1), autoPlayTime);
+            });
+        });
+    </script>
+
+</body>
+</html>
